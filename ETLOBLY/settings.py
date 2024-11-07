@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-x@3^kea7e8*i_0%ng7s!tdcd)m%&an#*+7ojh+&h=k3$-jf0ou
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,9 +81,13 @@ WSGI_APPLICATION = 'ETLOBLY.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'testserver0atef$etlobly',
+        'USER': 'testserver0atef',
+        'PASSWORD': 'ABC@atef24',
+        'HOST':'testserver0atef.mysql.pythonanywhere-services.com',
+        'PORT':'3306',
+}
 }
 
 
