@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <h1>Menu for {{ restaurant.name }}</h1>
+
+    {% if menu_items %}
+        <ul>
+            {% for item in menu_items %}
+                <li>
+                    <h3>{{ item.item }}</h3>
+                    <p>Description: {{ item.description }}</p>
+                    <p>Price: ${{ item.price }}</p>
+                    <p>Last Updated: {{ item.last_update }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No menu items available for this restaurant.</p>
+    {% endif %}
+
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    </div>
+{% endblock body %}

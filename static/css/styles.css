@@ -1,0 +1,89 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: url('/static/images/food-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #ff6347; /* Tomato color */
+    margin-bottom: 1em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #e5533c;
+}
+
+p {
+    margin-top: 1em;
+    font-size: 0.9em;
+    color: #555;
+}
+
+a {
+    color: #ff6347;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.tab {
+    display: none;
+}
+.tab.active {
+    display: block;
+}
+.tab-buttons button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #777272;
+    margin: 5px;
+}
+.tab-buttons button.active {
+    background-color: #007bff;
+    color: white;
+}

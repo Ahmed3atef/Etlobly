@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Etlobly</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+        <script>
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyAnZJk9gCKPyw3OCpMMT_0avr_F6NWj8vU",
+                authDomain: "etlobly-22592.firebaseapp.com",
+                projectId: "etlobly-22592",
+                storageBucket: "etlobly-22592.firebasestorage.app",
+                messagingSenderId: "615455196065",
+                appId: "1:615455196065:web:7cb80d1c7523ce120cc1e0"
+            };
+            firebase.initializeApp(firebaseConfig);
+    
+            function setupRecaptcha() {
+                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                    'size': 'invisible'
+                });
+            }
+    
+            function sendOTP() {
+                setupRecaptcha();
+                const phoneNumber = document.getElementById("phone_number").value;
+                const appVerifier = window.recaptchaVerifier;
+    
+                firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                    .then(confirmationResult => {
+                        window.confirmationResult = confirmationResult;
+                        alert("OTP sent to " + phoneNumber);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+    
+            function verifyOTP() {
+                const code = document.getElementById("otp_code").value;
+                window.confirmationResult.confirm(code).then(result => {
+                    const user = result.user;
+                    alert("Phone verified!");
+                    // Send Firebase UID to Django for verification
+                    fetch('/verify-firebase-auth/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ uid: user.uid, phone: user.phoneNumber })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = "/home";
+                        }
+                    });
+                }).catch(error => {
+                    alert("Invalid OTP");
+                    console.error(error);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        {% block body %}
+        {% endblock body %}
+        
+    </body>
+</html>

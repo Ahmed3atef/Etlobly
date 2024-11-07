@@ -1,0 +1,12 @@
+Hello {{ user.name }},
+
+Thank you for signing up for Etlobly!
+
+Please confirm your email address by clicking on the link below:
+
+{{ activate_url }}
+
+If you didn't create an account on Etlobly, please ignore this email.
+
+Best regards,
+The Etlobly Team

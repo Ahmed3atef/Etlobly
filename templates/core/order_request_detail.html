@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: green;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <h2>Order Request for {{ order_request.restaurant.name }}</h2>
+
+    {% if order_request.is_closed %}
+        <p>This request is closed. No further items can be added.</p>
+    {% else %}
+        {% if order_request.order_maker == user and not order_request.is_closed %}
+        <button onclick="location.href='{% url 'close_request' order_request.id %}'">Close Request</button>
+        {% endif %}
+    {% endif %}
+
+    <h3>Menu</h3>
+    <ul>
+    {% for item in menu_items %}
+    <li><h4>{{ item.item }}</h4></li>
+    <p><i>{{ item.description }}</i> - <strong>{{ item.price }} </strong>
+            {% if not order_request.is_closed %}
+                <a href="{% url 'add_item_to_order' order_request.id item.id %}">Add to Order</a>
+            {% endif %}
+        </p>
+    {% endfor %}
+    </ul>
+
+    <h1>Order Details</h1>
+    <h2>Items in Your Order</h2>
+    <ul>
+        {% for item in order_items %}
+            {% if item.user == user %}
+            <li>
+                {{ item.menu_item.item }} - {{ item.quantity }} x {{ item.menu_item.price }} = {{ item.item_cost }}
+                {% if not order_request.is_closed %}
+                    <form action="{% url 'remove_item_from_order' order_request.id item.menu_item.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Remove One</button>
+                    </form>
+                {% endif %}
+            </li>
+            {% endif %}
+            
+        {% endfor %}
+    </ul>
+    <h4>Delivery Cost: ${{ delivery_cost_per_user }}</h4>
+    <h4>Your Total Cost: ${{ user_total_cost }}</h4>
+
+    ---------------------------------------------------------
+
+    <h3>Order Items</h3>
+    {% for order_item in order_items %}
+        <p>{{ order_item.quantity }} x {{ order_item.menu_item.item }} by <strong>{{ order_item.user.name }}</strong> - ${{ order_item.item_cost }}</p>
+    {% endfor %}
+
+    
+    <h4>Total Request Cost: ${{ overall_order_total_cost|floatformat:2 }}</h4>
+
+    {% if order_request.order_maker == user and not order_request.is_finished %}
+        <button onclick="location.href='{% url 'finish_request' order_request.id %}'">Finish Request</button>
+    {% endif %}
+    <button onclick="location.href='{% url 'dashboard' %}'">Go Back</button>
+</div>
+{% endblock %}

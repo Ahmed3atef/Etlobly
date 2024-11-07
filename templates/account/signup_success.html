@@ -1,0 +1,11 @@
+<!-- templates/accounts/signup_success.html -->
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <h1>Thank you for signing up!</h1>
+    <p>Your account has been created successfully. Please Login and check your email to confirm your account.</p>
+    <a href="{% url 'account_login' %}">Go to Login</a>
+</div>
+    
+{% endblock body%}
