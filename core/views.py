@@ -9,10 +9,10 @@ def dashboard(request):
     restaurants = Restaurant.objects.all()
     
     # Get orders created by the user
-    created_orders = OrderRequest.objects.filter(order_maker=request.user, is_finished=False)
+    created_orders = OrderRequest.objects.filter(order_maker=request.user)
     
     # Get orders the user has joined but did not create
-    joined_orders = OrderRequest.objects.filter(order_receivers=request.user, is_finished=False)
+    joined_orders = OrderRequest.objects.filter(order_receivers = request.user).exclude(order_maker=request.user)
     
     # Combine these orders under "open_requests"
     open_requests = OrderRequest.objects.all()  # Combines both QuerySets
@@ -53,10 +53,7 @@ def join_request(request, request_id):
     
     if request.user not in order_request.order_receivers.all():
         order_request.order_receivers.add(request.user)
-        messages.success(request, "Joined the request successfully!")
-    else:
-        messages.warning(request, "You are already part of this request.")
-    
+        order_request.save()
     return redirect('order_request_detail', request_id)
 
 @login_required

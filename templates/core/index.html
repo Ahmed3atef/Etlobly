@@ -54,7 +54,7 @@
                     <p>Status: {% if request.is_closed %}<storng style="color: red;">Closed</strong>{% else %}<strong style="color: green;">Open</strong>{% endif %}</p>
                     <!-- Link to join request -->
                     {% if not request.is_closed and not request.order_maker == user%}
-                        <a href="{% url 'order_request_detail' request.id %}" class="btn btn-secondary">Join Request</a>
+                        <a href="{% url 'join_request' request.id %}" class="btn btn-secondary">Join Request</a>
                     {% endif %}
                 </li>
             {% endfor %}
@@ -81,11 +81,11 @@
         <h3>Orders You've Joined</h3>
         <ul>
             {% for order in joined_orders %}
-                    <li>
-                        <h4><a href="{% url 'order_request_detail' order.id %}">{{ order.restaurant.name }}</a></h4>
-                        <p>Order by: {{ order.order_maker.name }}</p>
-                        <p>Created on: {{ order.created_at }}</p>
-                    </li>
+                <li>
+                    <h4><a href="{% url 'order_request_detail' order.id %}">{{ order.restaurant.name }}</a></h4>
+                    <p>Order by: {{ order.order_maker.name }}</p>
+                    <p>Created on: {{ order.created_at }}</p>
+                </li>
             {% empty %}
                 <p>You have not joined any open requests.</p>
             {% endfor %}
