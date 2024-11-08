@@ -70,7 +70,8 @@
                     <h4><a href="{% url 'order_request_detail' order.id %}">{{ order.restaurant.name }}</a></h4>
                     <p>Created on: {{ order.created_at }}</p>
                     <p>Status: {% if order.is_closed %}<storng style="color: red;">Closed</strong>{% else %}<strong style="color: green;">Open</strong>{% endif %}</p>
-                    <button onclick="location.href='{% url 'finish_request' order.id %}'">Finish Request</button>
+                    {% if order.is_closed %}<button onclick="location.href='{% url 'finish_request' order.id %}'">Finish Request</button>{% else %}<button onclick="location.href='{% url 'close_request' order.id %}'">Close Request</button>{% endif %}
+                    
                 </li>
             {% empty %}
                 <p>You have not created any open requests.</p>
@@ -85,6 +86,7 @@
                     <h4><a href="{% url 'order_request_detail' order.id %}">{{ order.restaurant.name }}</a></h4>
                     <p>Order by: {{ order.order_maker.name }}</p>
                     <p>Created on: {{ order.created_at }}</p>
+                    <p>Status: {% if order.is_closed %}<storng style="color: red;">Closed</strong>{% else %}<strong style="color: green;">Open</strong>{% endif %}</p>
                 </li>
             {% empty %}
                 <p>You have not joined any open requests.</p>

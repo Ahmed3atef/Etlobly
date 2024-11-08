@@ -54,7 +54,7 @@
 
     <h3>Order Items</h3>
     {% for order_item in order_items %}
-        <p>{{ order_item.quantity }} x {{ order_item.menu_item.item }} by <strong>{{ order_item.user.name }}</strong> - ${{ order_item.item_cost }}</p>
+        <p>{{ order_item.quantity }} x {{ order_item.menu_item.item }} by <strong style="color: purple;">{{ order_item.user.name }}</strong> - ${{ order_item.item_cost }}</p>
     {% endfor %}
 
     

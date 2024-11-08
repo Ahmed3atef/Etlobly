@@ -31,7 +31,7 @@ class Menu(models.Model):
 class OrderRequest(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="order_requests")
     order_maker = models.ForeignKey(User, on_delete=models.CASCADE, related_name="order_requests_made")
-    order_receivers = models.ManyToManyField(User, related_name="received_order_requests", null=True, blank=True)
+    order_receivers = models.ManyToManyField(User, related_name="received_order_requests", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_closed = models.BooleanField(default=False)
     is_finished = models.BooleanField(default=False)
